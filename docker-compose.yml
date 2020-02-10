@@ -1,0 +1,44 @@
+version: '3'
+services:
+  db:
+    container_name: philly_db
+    networks:
+      - phillynet
+    image: postgres:latest
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: 'postgres'
+      POSTGRES_DB: 'philly'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+  app:
+    container_name: philly_app
+    networks:
+      - phillynet
+    build: .
+    environment:
+      - DB_HOST=philly_db
+      - TYPEORM_HOST=philly_db
+      - TYPEORM_CONNECTION=postgres
+      - TYPEORM_USERNAME=postgres
+      - TYPEORM_PASSWORD=postgres
+      - TYPEORM_DATABASE=philly
+      - TYPEORM_PORT=5432
+      - PORT=8999
+      - OPTIMUS_API_URL=http://192.168.144.1:7000
+    ports:
+      - 8999:8999
+    expose:
+      - 8999
+    volumes:
+      - ./:/home/node
+    depends_on:
+      - db
+    command: npm run start
+volumes:
+  postgres_data:
+networks:
+  phillynet:
+    external: false
