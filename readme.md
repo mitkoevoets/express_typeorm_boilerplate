@@ -1,6 +1,6 @@
-## Express Typeorm boilerplate[Philly 0.3.1]
+## Express Typeorm Boilerplate[Philly 0.3.1]
 
-Lightweight boilerplate for NodeJS api applications using Typescript, NodeJS and TypeORM.
+Lean boilerplate for NodeJS API applications using Typescript, NodeJS and TypeORM.
 
 Dockerized with a Postgres instance and ready to go!
 
