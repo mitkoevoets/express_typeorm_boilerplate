@@ -1,10 +1,12 @@
 import { Request, Response } from 'express';
-import { getManager } from 'typeorm';
+import { getManager, ObjectLiteral } from 'typeorm';
+import { Controller } from './Controller';
 
-export abstract class RestController {
+export abstract class RestController extends Controller{
   public abstract entity: string;
   public abstract restDir: string;
   public createTag: boolean = false;
+  public restRelations: string[] | undefined;
 
   /**
    *
@@ -64,13 +66,42 @@ export abstract class RestController {
   public update = async (request: Request, response: Response) => {
     const repository = getManager().getRepository(this.entity);
 
+    const instance: any = await repository.findOne(request.params.id);
 
-    const instance: {} | undefined | unknown = await repository.findOne(request.params.id);
-
-    for (let bodyKey in request.body) {
-      instance[bodyKey] = request.body[bodyKey];
+    if(!instance) {
+      return response.send('instance not found!'); // TODO throw exception
     }
 
-    response.send(instance);
+    for (let bodyKey in request.body) {
+      const key: string = bodyKey || '';
+
+      if(instance.hasOwnProperty(key) && request.body.hasOwnProperty(key)) {
+        instance[key] = request.body[key];
+      }
+    }
+
+    /**
+     * Update instance.
+     */
+    await repository.save(instance);
+
+    /**
+     * Return index.
+     */
+    const indexed = await repository.find(this.restOptions());
+
+    return response.send(indexed);
   };
+
+  /**
+   *
+   * @param options
+   */
+  protected restOptions(options: ObjectLiteral = {}): ObjectLiteral {
+    if (this.restRelations) {
+      options.relations = this.restRelations;
+    }
+
+    return options
+  }
 }
