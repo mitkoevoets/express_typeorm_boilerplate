@@ -24,7 +24,7 @@ export const appRoutes: AppRoute[] = [
     {
       path: '/',
       method: 'get',
-      action: controllers.image.test,
+      action: controllers.image.helloWorld,
     }
   ],
 ];

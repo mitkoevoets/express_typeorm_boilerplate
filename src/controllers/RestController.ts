@@ -1,10 +1,7 @@
 import { Request, Response } from 'express';
 import { getManager } from 'typeorm';
-import { Controller } from './Controller';
 
-// TODO: move to package
-
-export abstract class RestController extends Controller {
+export abstract class RestController {
   public abstract entity: string;
   public abstract restDir: string;
   public createTag: boolean = false;
@@ -71,8 +68,7 @@ export abstract class RestController extends Controller {
     const instance: {} | undefined | unknown = await repository.findOne(request.params.id);
 
     for (let bodyKey in request.body) {
-      console.log(bodyKey);
-      // instance[bodyKey] = request.body[bodyKey];
+      instance[bodyKey] = request.body[bodyKey];
     }
 
     response.send(instance);

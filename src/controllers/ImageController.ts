@@ -10,9 +10,7 @@ export class ImageController extends RestController {
    * @param request
    * @param response
    */
-  public test = async (request: Request, response: Response) => {
-    console.log(request);
-
+  public helloWorld = async (request: Request, response: Response) => {
     response.send('Philly is up!');
   };
 }
