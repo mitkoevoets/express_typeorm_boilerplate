@@ -37,7 +37,7 @@
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
     "tempfile": "^3.0.0",
-    "typeorm": "^0.2.20",
+    "typeorm": "^0.2.20"
   },
   "devDependencies": {
     "@types/node": "^11.13.22",
