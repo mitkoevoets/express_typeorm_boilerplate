@@ -1,5 +1,3 @@
-// TODO: move to package
-
 export interface AppRoute {
   path: string;
   method: string;
