@@ -5,7 +5,6 @@ import { Controller } from './Controller';
 export abstract class RestController extends Controller {
   public abstract entity: string;
   public abstract restDir: string;
-  public createTag: boolean = false;
   public restRelations: string[] | undefined;
 
   /**
@@ -47,12 +46,6 @@ export abstract class RestController extends Controller {
     const repository = getManager().getRepository(this.entity);
 
     let body = request.body;
-
-    if (this.createTag) {
-      const tag = '_' + Math.floor(Date.now() / 1000);
-
-      body = { ...body, tag };
-    }
 
     /**
      * Create and save new instance.
