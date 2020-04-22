@@ -4,8 +4,8 @@ Lean boilerplate for NodeJS API applications using Typescript, Express and TypeO
 
 Dockerized with a Postgres instance and ready to go!
 
-Boilerplate designed by Mit Koevoets.
-
 To run: 
 
 ```docker-compose up```
+
+Boilerplate designed by Mit Koevoets.
